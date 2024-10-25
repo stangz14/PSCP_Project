@@ -1,5 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Index Page</h1>
+<h1>Welcome to YouTube Playlist Music Player</h1>
+<div>
+    <input type="text" id="playlist-url" placeholder="Enter YouTube Playlist URL">
+    <button onclick="fetchPlaylist()">Get Playlist</button>
+</div>
+
+<div id="playlist-container">
+    <!-- Videos will be displayed here -->
+</div>
+
+<audio id="audio-player" controls>
+    <source id="audio-source" src="" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    async function fetchPlaylist() {
+        const url = document.getElementById('playlist-url').value;
+        const response = await fetch('/get_playlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ playlist_url: url })
+        });
+        
+        const data = await response.json();
+        const playlistContainer = document.getElementById('playlist-container');
+        playlistContainer.innerHTML = '';
+
+        data.videos.forEach(video => {
+            const videoElement = document.createElement('div');
+            videoElement.innerHTML = `
+                <p>${video.title}</p>
+                <button onclick="playAudio('${video.url}')">Play</button>
+            `;
+            playlistContainer.appendChild(videoElement);
+        });
+    }
+
+    async function playAudio(videoUrl) {
+        const response = await fetch('/stream', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ video_url: videoUrl })
+        });
+
+        const data = await response.json();
+        const audioPlayer = document.getElementById('audio-player');
+        const audioSource = document.getElementById('audio-source');
+
+        audioSource.src = data.audio_url;
+        audioPlayer.load();
+        audioPlayer.play();
+    }
+</script>
 {% endblock %}
