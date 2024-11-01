@@ -30,8 +30,6 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client['mydb']
 
 def create_app():
-    """"""
-    
     from .users import users
 
     app.register_blueprint(users, url_prefix='/')
