@@ -20,6 +20,7 @@
 }
 
 .center{
+    z-index: 99;
     text-align: center;
 }
 
@@ -83,21 +84,9 @@
     width: 320px;
 }
 
-/* .fire{
-    position: absolute;
-    bottom: 6%;
-    left: 5%;
-    z-index: -1;
-    opacity: 0;
-    transition: all .1s ease-in-out;
-}
-
-.fire.active{
-    transform: scale(1.5);
-    opacity: 1;
-} */
 
 .effect{
+    z-index: 1;
     display: flex;
     position: absolute;
     bottom: -8%;
@@ -113,14 +102,17 @@
 .effect img{
     width: 200px;
     display: inline;
-    margin: 0 -40px;
+    margin: 0 -35px;
 }
 
 .effect .fire-1{
-    transform: scale(1.5) translateY(-5%);
+    transform: scale(1.5) translateY(-10%);
+}
+.effect .fire{
+    transform:translateY(1%);
 }
 
 .effect .fire-2{
-    transform: scale(.85) translateY(-2%);
-    margin: 0 -60px;
+    transform:translateY(-7%);
+    margin: 0 -40px;
 }
