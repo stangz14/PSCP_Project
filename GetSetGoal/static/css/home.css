@@ -1,0 +1,129 @@
+.container{
+    position: absolute;
+    background: url('../img/Sky2.png');
+    width: 100%;
+    height:  100vh;
+    padding: 2rem;
+    overflow: hidden;
+    z-index: -99;
+}
+
+.grass{
+    position: absolute;
+    bottom: -150px;
+    left: -10px;
+    z-index: -80;
+}
+
+/* ############################################################################################### */
+
+.top{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.top .clock{
+    text-align: center;
+    position: relative;
+}
+
+.top .clock_base img{
+    z-index: 2;
+    margin-top: 20px;
+    height: 200px;
+}
+
+.top .btn-1{
+    left: 45px;
+    top: 0;
+}
+
+.top .btn-2{
+    left: 110px;
+    top: 8px;
+}
+
+.top .btn {
+    position: absolute;
+    z-index: -1;
+}
+
+.top .btn img{
+    height: 90px;
+    width: 60px;
+}
+
+.top .btn-clock{
+    position: absolute;
+    top: 50px;
+    right: 17px;
+}
+
+.top .btn-clock .arrow img{
+    cursor: pointer;
+    height: 40px;
+}
+
+.top .btn-clock .arrow.down img{
+    padding-right: 5px;
+    transform: rotate(180deg);
+}
+
+.top .clock-down img{
+    height: 43px;
+}
+
+.top .clock-down{
+    position: absolute;
+    bottom: 12px;
+    left: 100px;
+}
+
+.top .user-detail{
+    padding: 20px                   ;
+}
+
+.top .user-detail .name{
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.top .user-detail .exp-process{
+    position: relative;
+    width: 150px;
+    height: 15px;
+    background-color: white;
+    border: 1px solid white;
+    margin-bottom: 5px;
+}
+
+.top .user-detail .exp-process::after{
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 60%;
+    height: 100%;
+    background: rgb(93, 5, 182);
+    border: 1px solid white;
+}
+
+.top .user-detail .exp{
+    height: 2rem;
+}
+
+.top .setting img{
+    height: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.avatar{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.avatar img{
+    height: 350px;
+}
