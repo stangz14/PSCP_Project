@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="relative flex justify-center items-center">
+    <img src="music_player.png" alt="" class="">
+    <img src="music_button_1.png" alt="" class="absolute z-30 w-1/5 left-8 top-8 cursor-pointer" id="buttonImage">
+    <img src="music_lp.png" alt="" class="absolute z-20 w-7/12 cursor-pointer" id="lpImage">
+</div>
+
+<!-- ซ่อน YouTube Player -->
+<div id="player"></div>
+
+<div class="modal close absolute w-screen h-screen z-[9999] flex justify-center items-center" id="modal">
+    <div class="bg absolute w-screen h-screen bg-black/50"></div>
+    <div class="card relative">
+        <i class='bx bx-x text-3xl absolute top-5 right-9 cursor-pointer' onclick="closeModal()"></i>
+        <img src="songs_link_new.png" class="w-96" alt="">
+        <div class="input flex justify-center absolute top-[45%] left-[38%]">
+            <input type="text" name="music" id="musicLink" class="absolute" placeholder="Enter Link Music...">
+        </div>
+        <button onclick="playMusic()" class="absolute bg-slate-400 p-2 rounded-xl">Submit</button>
+    </div>
+</div>
+
+<!-- เพิ่ม YouTube API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    const lpImage = document.getElementById('lpImage');
+    const buttonImage = document.getElementById('buttonImage');
+    const modal = document.getElementById('modal');
+    const musicInput = document.getElementById('musicLink');
+    let player;
+
+    // สร้าง YouTube Player
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    // จัดการ animation ตามสถานะการเล่นเพลง
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            lpImage.classList.add('spin-animation');
+        }
+        if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+            lpImage.classList.remove('spin-animation');
+        }
+    }
+
+    // แปลง URL เป็น video ID
+    function getYouTubeVideoId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : false;
+    }
+
+    // ฟังก์ชันเล่นเพลง
+    function playMusic() {
+        const videoUrl = musicInput.value;
+        const videoId = getYouTubeVideoId(videoUrl);
+        
+        if (videoId) {
+            player.loadVideoById(videoId);
+            modal.classList.add('close');
+        } else {
+            alert('กรุณาใส่ URL YouTube ที่ถูกต้อง');
+        }
+    }
+
+    // ควบคุมการเล่น/หยุดด้วยการคลิกที่ LP
+    lpImage.addEventListener('click', () => {
+        if (player && player.getPlayerState() === YT.PlayerState.PLAYING) {
+            player.pauseVideo();
+        } else if (player && player.getPlayerState() === YT.PlayerState.PAUSED) {
+            player.playVideo();
+        }
+    });
+
+    buttonImage.addEventListener('click', () => {
+        modal.classList.remove('close');
+    });
+
+    function closeModal() {
+        modal.classList.add('close');
+    }
+</script>
+{% endblock %}
