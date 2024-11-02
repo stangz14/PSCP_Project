@@ -53,6 +53,7 @@
 }
 
 .dev {
+    opacity: 1;
     margin-top: 10%;
 }
 
@@ -115,4 +116,8 @@
 .effect .fire-2{
     transform:translateY(-7%);
     margin: 0 -40px;
+}
+
+.dev.active{
+    opacity: 0;
 }
