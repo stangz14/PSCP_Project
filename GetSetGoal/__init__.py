@@ -16,7 +16,7 @@ google = oauth.remote_app(
     consumer_key=os.getenv('GOOGLE_CLIENT_ID'),
     consumer_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
     request_token_params={
-        'scope': 'email profile',
+        'scope': 'email profile https://www.googleapis.com/auth/calendar.readonly',
     },
     base_url='https://www.googleapis.com/oauth2/v1/',
     request_token_url=None,
@@ -38,7 +38,8 @@ def create_app():
     def index():
         if 'google_token' in session:
             user_info = google.get('userinfo').data
-            return render_template('index.html', user=user_info)
+            events = google.get('https://www.googleapis.com/calendar/v3/calendars/primary/events').data
+            return render_template('index.html', user=user_info, events=events.get('items', []))
         return redirect(url_for('users.login'))
     
     return app
