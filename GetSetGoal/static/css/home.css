@@ -1,4 +1,7 @@
 .container.night{
     background: url('../img/Sky2.png');
-    
+}
+
+.modal-avatar.active{
+    display: flex;
 }
