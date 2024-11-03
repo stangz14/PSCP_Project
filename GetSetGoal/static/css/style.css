@@ -39,3 +39,25 @@
     background: url('../img/bg-level.png');
     background-position: center;
 }
+
+.avatar.small img{
+    width: 75%;
+    margin-bottom: 10%;
+}
+
+.avatar.mid img{
+    width: 75%;
+
+}
+
+.avatar.big{
+    width: 45%;
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.avatar.big img{
+    width: 100%;
+}
