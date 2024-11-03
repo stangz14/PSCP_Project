@@ -42,17 +42,19 @@
 
 .avatar.small img{
     width: 75%;
+    margin: 0 auto;
     margin-bottom: 10%;
 }
 
 .avatar.mid img{
     width: 75%;
-
+    margin: 0 auto;
 }
 
 .avatar.big{
     width: 45%;
     position: absolute;
+    margin: 0 auto;
     bottom: -10%;
     left: 50%;
     transform: translateX(-50%);

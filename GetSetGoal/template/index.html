@@ -43,9 +43,10 @@
                 </div>
 
                 <!-- Avatar -->
-                 <div style="z-index: 2;" class="w-1/3 avatar big">
-                    <img class="w-3/4 mx-auto" src="../static/img/avartars/Nobita_03_new.png" alt="">
+                 <div id="avatar-box" style="z-index: 2;" class="w-1/3 avatar ">
+                    <!-- <img class="w-3/4 mx-auto" src="../static/img/avartars/Nobita_03_new.png" alt=""> -->
                  </div>
+                 
                 <!-- music player -->
                 <div class="relative flex justify-center items-center min-w-56 max-w-56">
                     <img style="z-index: 2;" class="relative" src="../static/img/music_player.png" alt="">
@@ -80,7 +81,7 @@
         </div>
 
         <!-- modal for choose avatar -->
-        <div class="modal-avatar absolute top-0 left-0 z-[99] w-screen h-screen flex justify-center items-center">
+        <div class="modal-avatar absolute top-0 left-0 z-[99] w-screen h-screen hidden justify-center items-center">
             <div class="bg-black/50 absolute  w-screen h-screen"></div>
             <div class="card bg-white z-[99] max-w-3xl min-w-96 min-h-96 rounded-lg p-5 text-center">
                 <h4 class="text-black text-5xl mb-10">Choose Avatars</h4>

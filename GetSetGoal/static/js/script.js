@@ -1,12 +1,71 @@
 const modalAvatar = document.querySelector(".modal-avatar")
+const avatarBox = document.querySelector("#avatar-box")
+let avartarId = "D2"
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
+    modalAvatar.classList.add("hidden")
 }
 
-// window.addEventListener("load", (event) => {
-//     modalAvatar.classList.add("flex")
-// });
+window.addEventListener("load", (event) => {
+    modalAvatar.classList.add("flex")
+    modalAvatar.classList.remove("hidden")
+});
+
+if (avartarId){
+    let avatarImg = document.createElement('img')
+
+    if (avartarId == "C1"){
+        avatarImg.src = "../static/img/avartars/Cat_01_new.png"
+        avatarBox.classList.add('small')
+    }
+
+    if (avartarId == "D1"){
+        avatarImg.src = "../static/img/avartars/Duck_01_new.png"
+        avatarBox.classList.add('small')
+    }
+
+    if (avartarId == "N1"){
+        avatarImg.src = "../static/img/avartars/Nobita_01_new.png"
+        avatarBox.classList.add('small')
+    }
+
+    if (avartarId == "C2"){
+        avatarImg.src = "../static/img/avartars/Cat_02_new.png"
+        avatarBox.classList.add('mid')
+    }
+
+    if (avartarId == "D2"){
+        avatarImg.src = "../static/img/avartars/Duck_02_new.png"
+        avatarBox.classList.add('mid')
+    }
+
+    if (avartarId == "N2"){
+        avatarImg.src = "../static/img/avartars/Nobita_02_new.png"
+        avatarBox.classList.add('mid')
+    }
+
+    if (avartarId == "C3"){
+        avatarImg.src = "../static/img/avartars/Cat_03_new.png"
+        avatarBox.classList.add('big')
+    }
+
+    if (avartarId == "C3"){
+        avatarImg.src = "../static/img/avartars/Cat_03_new.png"
+        avatarBox.classList.add('big')
+    }
+
+    if (avartarId == "C3"){
+        avatarImg.src = "../static/img/avartars/Cat_03_new.png"
+        avatarBox.classList.add('big')
+    }
+
+    avatarBox.appendChild(avatarImg)
+}
+
+
+
+// ##################################################################
 
 const setting_btn = document.querySelector('.setting-btn')
 modal_setting = document.querySelector('.modal-setting')
