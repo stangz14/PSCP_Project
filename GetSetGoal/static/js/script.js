@@ -1,16 +1,16 @@
 const modalAvatar = document.querySelector(".modal-avatar")
 const avatarBox = document.querySelector("#avatar-box")
-let avartarId = "D2"
+let avartarId = "C3"
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
     modalAvatar.classList.add("hidden")
 }
 
-window.addEventListener("load", (event) => {
-    modalAvatar.classList.add("flex")
-    modalAvatar.classList.remove("hidden")
-});
+// window.addEventListener("load", (event) => {
+//     modalAvatar.classList.add("flex")
+//     modalAvatar.classList.remove("hidden")
+// });
 
 if (avartarId){
     let avatarImg = document.createElement('img')
@@ -50,13 +50,13 @@ if (avartarId){
         avatarBox.classList.add('big')
     }
 
-    if (avartarId == "C3"){
-        avatarImg.src = "../static/img/avartars/Cat_03_new.png"
+    if (avartarId == "D3"){
+        avatarImg.src = "../static/img/avartars/Duck_03_new.png"
         avatarBox.classList.add('big')
     }
 
-    if (avartarId == "C3"){
-        avatarImg.src = "../static/img/avartars/Cat_03_new.png"
+    if (avartarId == "N3"){
+        avatarImg.src = "../static/img/avartars/Nobita_03_new.png"
         avatarBox.classList.add('big')
     }
 
