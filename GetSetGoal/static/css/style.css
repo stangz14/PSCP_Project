@@ -16,6 +16,7 @@
     animation: spin 3s linear infinite;
 }
 
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -27,4 +28,14 @@
 
 #player {
     display: none;
+}
+
+.modal-setting.active{
+    transform: rotate(0) translateY(-70%) translateX(-50%);
+    opacity: 1;
+}
+
+.bg-level{
+    background: url('../img/bg-level.png');
+    background-position: center;
 }
