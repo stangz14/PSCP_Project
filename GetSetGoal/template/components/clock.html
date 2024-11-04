@@ -1,0 +1,36 @@
+<!-- Clock components -->
+{% macro clock_display() %}
+    <div class="text-center w-1/3 relative">
+        <!-- <img src="https://placehold.co/400x250" alt=""> -->
+        <img src="../static/img/clocl_main_new.png" alt="">
+        <div style="z-index: 20;" class="absolute top-0 left-0 w-full h-full">
+            <div style="z-index: 20;" class=" w-full h-3/5 text-center grid grid-cols-[5%_30%_50%_13%]">
+                <div></div>
+                <div class="mode text-black mt-6 text-xl">Auto</div>
+                <div class="flex flex-col justify-center items-start">
+                    <div id="ReadTime" class="mode flex justify-start items-end gap-1">
+                        <h4 class="text-3xl text-black tracking-wider mr-1">Read </h4>
+                        <h4 class="text-2xl text-black">25</h4>
+                        <h4 class="text-2xl text-black">:</h4>
+                        <h4 class="text-2xl text-black">00</h4>
+                    </div>
+                    <div id="RelaxTime" class="flex justify-start items-end gap-1">
+                        <h4 class="text-3xl text-black tracking-wide mr-1r">Relax </h4>
+                        <h4 class="text-2xl text-black">5</h4>
+                        <h4 class="text-2xl text-black">:</h4>
+                        <h4 class="text-2xl text-black">00</h4>
+                    </div>
+            </div>
+            <div class="flex flex-col justify-center items-center pt-5">
+                <img class="w-[80%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/clock_up_new.png" alt="">
+                <img class="w-[86%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/clock_down_new.png" alt="">
+            </div>
+            </div>
+            <div class="flex justify-center items-center mt-6 gap-10">
+                <img onclick="startTimer()" id="toggle" class="w-[10%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/start.png" alt="">
+                <img class="w-[10%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/replay.png" alt="">
+            </div>
+        </div>
+        <img style="z-index: 10;" class="absolute bottom-2 h-[30%] left-1/2 -translate-x-1/2"  src="../static/img/clock_start_new.png" alt="">
+    </div>
+{% endmacro %}

@@ -1,4 +1,11 @@
+{% import "components/clock.html" as clock %}
+{% import "components/music_player.html" as musicPlayer %}
+{% import "components/calendar.html" as calendar %}
+{% import "components/setting.html" as setting %}
+{% import "components/avatar.html" as avatar %}
+
 {% extends 'base.html' %}
+
 
 {% block link %}
     <link rel="stylesheet" href="../static/css/home.css">
@@ -27,54 +34,15 @@
                 </div>
 
                 <!-- Clock -->
-                <div class="text-center w-1/3 relative">
-                    <!-- <img src="https://placehold.co/400x250" alt=""> -->
-                    <img src="../static/img/clocl_main_new.png" alt="">
-                    <div style="z-index: 20;" class="absolute top-0 left-0 w-full h-full">
-                        <div style="z-index: 20;" class=" w-full h-3/5 text-center grid grid-cols-[5%_30%_50%_13%]">
-                            <div></div>
-                            <div class="mode text-black mt-6 text-xl">Auto</div>
-                            <div class="flex flex-col justify-center items-start">
-                                <div class="mode flex justify-start items-end">
-                                    <h4 class="text-3xl text-black mr-2 tracking-wider">Read </h4>
-                                    <h4 class="text-2xl text-black">25</h4>
-                                    <h4 class="text-2xl text-black">:</h4>
-                                    <h4 class="text-2xl text-black">00</h4>
-                                </div>
-                                <div class="flex justify-start items-end">
-                                    <h4 class="text-3xl text-black mr-2 tracking-wider">Relax </h4>
-                                    <h4 class="text-2xl text-black">5</h4>
-                                    <h4 class="text-2xl text-black">:</h4>
-                                    <h4 class="text-2xl text-black">00</h4>
-                                </div>
-                        </div>
-                        <div class="flex flex-col justify-center items-center pt-5">
-                            <img class="w-[80%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/clock_up_new.png" alt="">
-                            <img class="w-[86%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/clock_down_new.png" alt="">
-                        </div>
-                        </div>
-                        <div class="flex justify-center items-center mt-6 gap-10">
-                            <img class="w-[10%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/start.png" alt="">
-                            <img class="w-[10%] cursor-pointer transition duration-300 ease-in-out hover:scale-125" src="../static/img/replay.png" alt="">
-                        </div>
-                    </div>
-                    <img style="z-index: 10;" class="absolute bottom-2 h-[30%] left-1/2 -translate-x-1/2"  src="../static/img/clock_start_new.png" alt="">
-                </div>
+                {{ clock.clock_display() }}
 
                 <!-- setting -->
-                <div class="w-1/3 setting flex justify-end items-start relative" style="z-index: 20;">
-                    <img class="setting-btn cursor-pointer w-1/5 transition duration-300 ease-in-out hover:rotate-90" style="z-index: 20;" src="../static/img/setting_icon_new.png" alt="">
-                    <div class="modal-setting absolute bg-white px-12 py-5 rounded-xl -rotate-90 top-28 -right-6 transition duration-300 ease-in-out opacity-0 ">
-                        <a href="" class="text-black hover:text-rose-700">Logout</a>
-                    </div>
-                </div>
+                {{ setting.setting_display() }}
             </div>
 
             <div class="h-[50vh] flex justify-between items-end relative" >
                 <!-- calendar -->
-                <div style="z-index: 2;" class="calendar relative w-[15%]">
-                    <img class="cursor-pointer transition duration-300 ease-in-out hover:scale-110" src="../static/img/calendar_icon.png" alt="">
-                </div>
+                {{ calendar.calendar_display() }}
 
                 <!-- Avatar -->
                  <div id="avatar-box" style="z-index: 2;" class="w-1/3 avatar ">
@@ -82,57 +50,16 @@
                  </div>
                  
                 <!-- music player -->
-                <div class="relative flex justify-center items-center min-w-56 max-w-56">
-                    <img style="z-index: 2;" class="relative" src="../static/img/music_player.png" alt="">
-                    <img src="../static/img/music_button_1.png" alt="" class="absolute z-30 w-1/6 left-3 top-6 cursor-pointer" id="buttonImage">
-                    <img onclick="togglePlayPause()" src="../static/img/music_lp.png" alt="" class="absolute z-20 w-7/12 cursor-pointer" id="lpImage">
-                </div>
-                <div id="player"></div>
+                {{ musicPlayer.music_player_display() }}
             </div>
         </div>
 
 
         <!-- Modal Music-->
-        <div class="modal close absolute top-0 left-0 w-screen h-screen z-[9999] flex justify-center items-center" id="modal-music">
-            <div class="bg absolute w-screen h-screen bg-black/50"  onclick="closeModal()"></div>
-            <div class="card relative flex justify-center items-center">
-                <i class='bx bx-x text-3xl absolute top-5 right-9 cursor-pointer text-black' onclick="closeModal()"></i>
-                <img src="../static/img/songs_link_new.png" class="w-96" alt="">
-                <div class="input flex justify-center absolute top-[45%] left-[38%]">
-                    <input type="text" 
-                        name="music" 
-                        id="youtubeLink" 
-                        class="absolute text-black" 
-                        placeholder="Enter Link Music...">
-                </div>
-                <div class="button absolute flex justify-center bottom-14">
-                    <button onclick="loadNewVideo()" 
-                        class="absolute bg-slate-400 p-2 rounded-xl submit-btn">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
+        {{ musicPlayer.music_player_modal() }}
 
         <!-- modal for choose avatar -->
-        <div class="modal-avatar absolute top-0 left-0 z-[99] w-screen h-screen hidden justify-center items-center">
-            <div class="bg-black/50 absolute  w-screen h-screen"></div>
-            <div class="card bg-white z-[99] max-w-3xl min-w-96 min-h-96 rounded-lg p-5 text-center">
-                <h4 class="text-black text-5xl mb-10">Choose Avatars</h4>
-                <div class="flex gap-10 m-5">
-                    <div onclick="ChooseAvartar(1)" class="cat flex justify-center items-center w-1/3 cursor-pointer p-2 rounded-lg transition duration-150 ease-out hover:ease-in hover:scale-110 hover:bg-[#eeeeee]">
-                        <img src="../static/img/avartars/Cat_02_New.png" alt="">
-                    </div>
-                    <div onclick="ChooseAvartar(4)" class="nobita flex justify-center items-center w-1/3 cursor-pointer p-2 rounded-lg transition duration-150 ease-out hover:ease-in hover:scale-110 hover:bg-[#eeeeee]">
-                        <img src="../static/img/avartars/Nobita_02_new.png" alt="">
-                    </div>
-                    <div onclick="ChooseAvartar(7)" class="duck flex justify-center items-center w-1/3 cursor-pointer p-2 rounded-lg transition duration-150 ease-out hover:ease-in hover:scale-110 hover:bg-[#eeeeee]">
-                        <img src="../static/img/avartars/duck_02_new.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-
+         {{ avatar.avatar_modal()}}
         
         <script src="../static/js/script.js"></script>
     </div>

@@ -1,6 +1,6 @@
 const modalAvatar = document.querySelector(".modal-avatar")
 const avatarBox = document.querySelector("#avatar-box")
-let avartarId = "C3"
+let avartarId = ""
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
@@ -199,4 +199,26 @@ function loadNewVideo() {
     } else {
         alert('Please enter a valid YouTube URL')
     }
+}
+
+
+// ##########################################################################
+// Clock
+
+let timer;
+let ReadTimeRemaining = 25 * 60; // 25 นาทีในวินาที
+let RelaxTimeRemaining = 5 * 60; // 5 นาทีในวินาที
+let round = 0
+let isRuning = false
+
+const toggleButton = document.querySelector('#toggle')
+
+const startTimer = () => {
+    if (!isRuning){
+        isRuning = true
+    } else{
+        isRuning = false
+        
+    }
+    console.log(isRuning)
 }
