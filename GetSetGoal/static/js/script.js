@@ -1,66 +1,72 @@
 const modalAvatar = document.querySelector(".modal-avatar")
 const avatarBox = document.querySelector("#avatar-box")
-let avartarId = ""
+let avartarId = 0
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
     modalAvatar.classList.add("hidden")
+    avartarId = idx 
+    updateAvtar()
 }
 
-// window.addEventListener("load", (event) => {
-//     modalAvatar.classList.add("flex")
-//     modalAvatar.classList.remove("hidden")
-// });
-
-if (avartarId){
-    let avatarImg = document.createElement('img')
-
-    if (avartarId == "C1"){
-        avatarImg.src = "../static/img/avartars/Cat_01_new.png"
-        avatarBox.classList.add('small')
+window.addEventListener("load", (event) => {
+    if (!avartarId){
+        modalAvatar.classList.add("flex")
+    modalAvatar.classList.remove("hidden")
     }
+});
 
-    if (avartarId == "D1"){
-        avatarImg.src = "../static/img/avartars/Duck_01_new.png"
-        avatarBox.classList.add('small')
+const updateAvtar = () => {
+    if (avartarId){
+        let avatarImg = document.createElement('img')
+    
+        if (avartarId == 1){
+            avatarImg.src = "../static/img/avartars/Cat_01_new.png"
+            avatarBox.classList.add('small')
+        }
+    
+        if (avartarId == 4){
+            avatarImg.src = "../static/img/avartars/Duck_01_new.png"
+            avatarBox.classList.add('small')
+        }
+    
+        if (avartarId == 7){
+            avatarImg.src = "../static/img/avartars/Nobita_01_new.png"
+            avatarBox.classList.add('small')
+        }
+    
+        if (avartarId == 2){
+            avatarImg.src = "../static/img/avartars/Cat_02_new.png"
+            avatarBox.classList.add('mid')
+        }
+    
+        if (avartarId == 5){
+            avatarImg.src = "../static/img/avartars/Duck_02_new.png"
+            avatarBox.classList.add('mid')
+        }
+    
+        if (avartarId == 8){
+            avatarImg.src = "../static/img/avartars/Nobita_02_new.png"
+            avatarBox.classList.add('mid')
+        }
+    
+        if (avartarId == 3){
+            avatarImg.src = "../static/img/avartars/Cat_03_new.png"
+            avatarBox.classList.add('big')
+        }
+    
+        if (avartarId == 6){
+            avatarImg.src = "../static/img/avartars/Duck_03_new.png"
+            avatarBox.classList.add('big')
+        }
+    
+        if (avartarId == 9){
+            avatarImg.src = "../static/img/avartars/Nobita_03_new.png"
+            avatarBox.classList.add('big')
+        }
+    
+        avatarBox.appendChild(avatarImg)
     }
-
-    if (avartarId == "N1"){
-        avatarImg.src = "../static/img/avartars/Nobita_01_new.png"
-        avatarBox.classList.add('small')
-    }
-
-    if (avartarId == "C2"){
-        avatarImg.src = "../static/img/avartars/Cat_02_new.png"
-        avatarBox.classList.add('mid')
-    }
-
-    if (avartarId == "D2"){
-        avatarImg.src = "../static/img/avartars/Duck_02_new.png"
-        avatarBox.classList.add('mid')
-    }
-
-    if (avartarId == "N2"){
-        avatarImg.src = "../static/img/avartars/Nobita_02_new.png"
-        avatarBox.classList.add('mid')
-    }
-
-    if (avartarId == "C3"){
-        avatarImg.src = "../static/img/avartars/Cat_03_new.png"
-        avatarBox.classList.add('big')
-    }
-
-    if (avartarId == "D3"){
-        avatarImg.src = "../static/img/avartars/Duck_03_new.png"
-        avatarBox.classList.add('big')
-    }
-
-    if (avartarId == "N3"){
-        avatarImg.src = "../static/img/avartars/Nobita_03_new.png"
-        avatarBox.classList.add('big')
-    }
-
-    avatarBox.appendChild(avatarImg)
 }
 
 
@@ -98,6 +104,7 @@ let isPlaying = false;
 
 const lpImage = document.getElementById('lpImage');
 const modal_music = document.getElementById('modal-music');
+const modal_result = document.getElementById("modal-result")
 
 buttonImage.addEventListener('click', () => {
     modal_music.classList.remove('close');
@@ -105,6 +112,7 @@ buttonImage.addEventListener('click', () => {
 
 function closeModal() {
     modal_music.classList.add('close');
+    modal_result.classList.add('hidden');
 }
 
 
@@ -141,7 +149,6 @@ function createPlayer(videoId) {
         }
     });
 
-    console.log(player)
 }
 
 function onPlayerReady(event) {
@@ -216,6 +223,8 @@ let round = 0
 let isRunning = false
 let isRelax = false
 let autoMode = true
+let stopMode = false
+let timeCount = 0
 let focusTime = "#readMin"
 
 const toggleButton = document.querySelector('#toggle')
@@ -225,28 +234,50 @@ const ModeDisplay = document.querySelector("#modeDisplay")
 const AutoModeBtn = document.querySelector("#autoMode")
 const CustomModeBtn = document.querySelector("#customMode")
 
-
-const changeAutomode = () => { 
-    autoMode = true
-    ModeDisplay.textContent = 'Auto'
-    AutoModeBtn.classList.add("active")
-    CustomModeBtn.classList.remove("active")
-    document.querySelector(focusTime).classList.remove("custome-focus")
+const resetClock = () =>{
+    stopMode = true
+    modal_result.classList.remove("hidden")
+    modal_result.classList.add("flex")
+    timeCount = timeCount + ((ReadTime * 60) + ReadTimeSec - ReadTimeRemaining)
+    console.log(timeCount)
+    startTimer()
     ReadTime = 25
     RelaxTime = 5
-    ReadTimeSec = 0
-    RelaxTimeSec = 0
     ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
-    RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec;
+    RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; 
+    stopMode = false
     updateRelaxDisplay()
     updateReadDisplay()
 }
+
+
+const changeAutomode = () => { 
+    if (!isRunning){
+        timeCount = 0
+        autoMode = true
+        ModeDisplay.textContent = 'Auto'
+        AutoModeBtn.classList.add("active")
+        CustomModeBtn.classList.remove("active")
+        document.querySelector(focusTime).classList.remove("custome-focus")
+        ReadTime = 25
+        RelaxTime = 5
+        ReadTimeSec = 0
+        RelaxTimeSec = 0
+        ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+        RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec;
+        updateRelaxDisplay()
+        updateReadDisplay()
+    }
+}
 const changeCustommode = () => { 
-    autoMode = false
-    ModeDisplay.textContent = 'Custom'
-    CustomModeBtn.classList.add("active")
-    AutoModeBtn.classList.remove("active")
-    document.querySelector(focusTime).classList.add("custome-focus")
+    if (!isRunning) {
+        timeCount = 0
+        autoMode = false
+        ModeDisplay.textContent = 'Custom'
+        CustomModeBtn.classList.add("active")
+        AutoModeBtn.classList.remove("active")
+        document.querySelector(focusTime).classList.add("custome-focus")
+    }
 }
 
 const changeTime = (timeNumber) => {
@@ -254,7 +285,6 @@ const changeTime = (timeNumber) => {
         document.querySelector(focusTime).classList.remove("custome-focus")
         focusTime = "#" + timeNumber.id
         timeNumber.classList.add('custome-focus')
-        console.log(focusTime)
     }
 }
 
@@ -350,43 +380,51 @@ function updateReadDisplay() {
 }
 
 const startTimer = () => {
-    if (!isRunning){
+    if (!isRunning  && !stopMode){
         document.querySelector(focusTime).classList.remove("custome-focus")
         isRunning = true
-        timer = setInterval (() => {
-            if (isRelax){
-                if (RelaxTimeRemaining > 0) {
-                    RelaxTimeRemaining--;
-                    updateRelaxDisplay();
-                } else {
-                    RelaxTimeRemaining = RelaxTime * 60; // Reset Relax time 
-                    isRelax = false; // switch to Read Time
-                    ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
-                    RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; 
-                    updateRelaxDisplay()
-                    updateReadDisplay()
-                }
-            } else {
-                if (ReadTimeRemaining > 0) {
-                    ReadTimeRemaining--;
-                    updateReadDisplay();
-                } else {
-                    round = round + 1
-                    if (round > 3){
-                        round = 0
-                        RelaxTimeRemaining = RelaxTimeRemaining * 3
-                    }
-                    timeRemaining = ReadTime * 60; // รีเซ็ต 25 นาที
-                    isRelax = true; // เปลี่ยนไปที่ 5 นาที
-                    updateReadDisplay();
-                    updateRelaxDisplay();
-                }
-            }
-        } , 1000)
+        timerLogic();
+        
+        timer = setInterval(timerLogic, 1000);
     } else{
         stopTimer();
     }
 }
+
+
+const timerLogic = () => {
+    if (isRelax) {
+        if (RelaxTimeRemaining > 0) {
+            RelaxTimeRemaining--;
+            updateRelaxDisplay();
+        } else {
+            RelaxTimeRemaining = RelaxTime * 60; // Reset Relax time
+            isRelax = false; // Switch to Read Time
+            ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+            RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; 
+            updateRelaxDisplay();
+            updateReadDisplay();
+        }
+    } else {
+        if (ReadTimeRemaining > 0) {
+            ReadTimeRemaining--;
+            updateReadDisplay();
+        } else {
+            timeCount = timeCount + (ReadTime * 60) + ReadTimeSec;
+            round = round + 1;
+            if (round > 3) {
+                round = 0;
+                RelaxTimeRemaining = RelaxTimeRemaining * 3;
+            }
+            ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+            isRelax = true; // Switch to Relax time
+            updateReadDisplay();
+            updateRelaxDisplay();
+        }
+    }
+}
+
+
 
 function resetTimer() {
     stopTimer();
