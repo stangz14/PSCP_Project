@@ -361,7 +361,10 @@ const startTimer = () => {
                 } else {
                     RelaxTimeRemaining = RelaxTime * 60; // Reset Relax time 
                     isRelax = false; // switch to Read Time
-                    updateRelaxDisplay();
+                    ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+                    RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; 
+                    updateRelaxDisplay()
+                    updateReadDisplay()
                 }
             } else {
                 if (ReadTimeRemaining > 0) {
@@ -369,7 +372,7 @@ const startTimer = () => {
                     updateReadDisplay();
                 } else {
                     round = round + 1
-                    if (round >= 3){
+                    if (round > 3){
                         round = 0
                         RelaxTimeRemaining = RelaxTimeRemaining * 3
                     }
