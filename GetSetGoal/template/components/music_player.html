@@ -1,0 +1,34 @@
+<!-- music_player -->
+{% macro music_player_display() %}
+    <div class="relative flex justify-center items-center min-w-56 max-w-56">
+        <img style="z-index: 2;" class="relative" src="../static/img/music_player.png" alt="">
+        <img src="../static/img/music_button_1.png" alt="" class="absolute z-30 w-1/6 left-3 top-6 cursor-pointer" id="buttonImage">
+        <img onclick="togglePlayPause()" src="../static/img/music_lp.png" alt="" class="absolute z-20 w-7/12 cursor-pointer" id="lpImage">
+    </div>
+    
+    <div id="player"></div>
+{% endmacro %}
+
+
+{% macro music_player_modal() %}
+    <div class="modal close absolute top-0 left-0 w-screen h-screen z-[9999] flex justify-center items-center" id="modal-music">
+        <div class="bg absolute w-screen h-screen bg-black/50"  onclick="closeModal()"></div>
+        <div class="card relative flex justify-center items-center">
+            <i class='bx bx-x text-3xl absolute top-5 right-9 cursor-pointer text-black' onclick="closeModal()"></i>
+            <img src="../static/img/songs_link_new.png" class="w-96" alt="">
+            <div class="input flex justify-center absolute top-[45%] left-[38%]">
+                <input type="text" 
+                    name="music" 
+                    id="youtubeLink" 
+                    class="absolute text-black" 
+                    placeholder="Enter Link Music...">
+            </div>
+            <div class="button absolute flex justify-center bottom-14">
+                <button onclick="loadNewVideo()" 
+                    class="absolute bg-slate-400 p-2 rounded-xl submit-btn">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

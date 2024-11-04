@@ -1,6 +1,6 @@
 const modalAvatar = document.querySelector(".modal-avatar")
 const avatarBox = document.querySelector("#avatar-box")
-let avartarId = "C3"
+let avartarId = ""
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
@@ -200,3 +200,204 @@ function loadNewVideo() {
         alert('Please enter a valid YouTube URL')
     }
 }
+
+
+// ##########################################################################
+// Clock
+
+let timer;
+let ReadTime = 25
+let RelaxTime = 5
+let ReadTimeSec = 0
+let RelaxTimeSec = 0
+let ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec; // 25 นาทีในวินาที
+let RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; // 5 นาทีในวินาที
+let round = 0
+let isRunning = false
+let isRelax = false
+let autoMode = true
+let focusTime = "#readMin"
+
+const toggleButton = document.querySelector('#toggle')
+const RelaxTimeDisplay = document.querySelector("#relaxTimeDisplay")
+const ReadTimeDisplay = document.querySelector("#readTimeDisplay")
+const ModeDisplay = document.querySelector("#modeDisplay")
+const AutoModeBtn = document.querySelector("#autoMode")
+const CustomModeBtn = document.querySelector("#customMode")
+
+
+const changeAutomode = () => { 
+    autoMode = true
+    ModeDisplay.textContent = 'Auto'
+    AutoModeBtn.classList.add("active")
+    CustomModeBtn.classList.remove("active")
+    document.querySelector(focusTime).classList.remove("custome-focus")
+    ReadTime = 25
+    RelaxTime = 5
+    ReadTimeSec = 0
+    RelaxTimeSec = 0
+    ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+    RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec;
+    updateRelaxDisplay()
+    updateReadDisplay()
+}
+const changeCustommode = () => { 
+    autoMode = false
+    ModeDisplay.textContent = 'Custom'
+    CustomModeBtn.classList.add("active")
+    AutoModeBtn.classList.remove("active")
+    document.querySelector(focusTime).classList.add("custome-focus")
+}
+
+const changeTime = (timeNumber) => {
+    if (!autoMode){
+        document.querySelector(focusTime).classList.remove("custome-focus")
+        focusTime = "#" + timeNumber.id
+        timeNumber.classList.add('custome-focus')
+        console.log(focusTime)
+    }
+}
+
+const addTime = () => {
+    if (!autoMode){
+        switch (focusTime){
+            case "#readMin":
+                ReadTime = Math.abs((ReadTime + 1) % 60);
+                break;
+            case "#relaxMin":
+                RelaxTime = Math.abs((RelaxTime + 1) % 60);
+                break;
+            case "#readSec":
+                ReadTimeSec = Math.abs((ReadTimeSec + 1) % 60);
+                break;
+            case "#relaxSec":
+                RelaxTimeSec = Math.abs((RelaxTimeSec + 1) % 60);
+                break;
+            default:
+                console.log('err')
+                break;
+        }
+        ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+        RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; 
+        updateRelaxDisplay()
+        updateReadDisplay()
+        document.querySelector(focusTime).classList.add("custome-focus")
+    }
+}
+
+const reduceTime = () => {
+    if (!autoMode){
+        switch (focusTime){
+            case "#readMin":
+                if ((ReadTime - 1) >= 0){
+                    ReadTime = Math.abs((ReadTime - 1) % 60);
+                } else {
+                    ReadTime = 59
+                }
+                break;
+            case "#relaxMin":
+                if ((RelaxTime - 1) >= 0){
+                    RelaxTime = Math.abs((RelaxTime - 1) % 60);
+                } else {
+                    RelaxTime = 59
+                }
+                break;
+            case "#readSec":
+                if ((ReadTimeSec - 1) >= 0){
+                    ReadTimeSec = Math.abs((ReadTimeSec - 1) % 60);
+                } else {
+                    ReadTimeSec = 59
+                }
+                break;
+            case "#relaxSec":
+                if ((RelaxTimeSec - 1) >= 0){
+                    RelaxTimeSec = Math.abs((RelaxTimeSec - 1) % 60);
+                } else {
+                    RelaxTimeSec = 59
+                }
+                break;
+            default:
+                console.log('err')
+                break;
+        }
+        ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
+        RelaxTimeRemaining = (RelaxTime * 60) + RelaxTimeSec; 
+        updateRelaxDisplay()
+        updateReadDisplay()
+        document.querySelector(focusTime).classList.add("custome-focus")
+    }
+}
+
+
+function updateRelaxDisplay() {
+    const minutes = Math.floor(RelaxTimeRemaining / 60);
+    const seconds = RelaxTimeRemaining % 60;
+    RelaxTimeDisplay.innerHTML = 
+                                    `<h4 class="text-3xl text-black tracking-wide mr-1r">Relax </h4>
+                                    <h4 onclick="changeTime(this)" id="relaxMin" class="cursor-pointer text-2xl text-black tracking-wider">${String(minutes).padStart(2, '0')}</h4>
+                                    <h4 class="text-2xl text-black">:</h4>
+                                    <h4 onclick="changeTime(this)" id="relaxSec" class="cursor-pointer text-2xl text-black tracking-wider">${String(seconds).padStart(2, '0')}</h4>`;
+}
+
+function updateReadDisplay() {
+    const minutes = Math.floor(ReadTimeRemaining / 60);
+    const seconds = ReadTimeRemaining % 60;
+    ReadTimeDisplay.innerHTML = 
+                                    `<h4 class="text-3xl text-black tracking-wide mr-1r">Read </h4>
+                                    <h4 onclick="changeTime(this)" id="readMin" class="cursor-pointer text-2xl text-black tracking-wider">${String(minutes).padStart(2, '0')}</h4>
+                                    <h4 class="text-2xl text-black">:</h4>
+                                    <h4 onclick="changeTime(this)" id="readSec" class="cursor-pointer text-2xl text-black tracking-wider">${String(seconds).padStart(2, '0')}</h4>`;
+}
+
+const startTimer = () => {
+    if (!isRunning){
+        document.querySelector(focusTime).classList.remove("custome-focus")
+        isRunning = true
+        timer = setInterval (() => {
+            if (isRelax){
+                if (RelaxTimeRemaining > 0) {
+                    RelaxTimeRemaining--;
+                    updateRelaxDisplay();
+                } else {
+                    RelaxTimeRemaining = RelaxTime * 60; // Reset Relax time 
+                    isRelax = false; // switch to Read Time
+                    updateRelaxDisplay();
+                }
+            } else {
+                if (ReadTimeRemaining > 0) {
+                    ReadTimeRemaining--;
+                    updateReadDisplay();
+                } else {
+                    round = round + 1
+                    if (round >= 3){
+                        round = 0
+                        RelaxTimeRemaining = RelaxTimeRemaining * 3
+                    }
+                    timeRemaining = ReadTime * 60; // รีเซ็ต 25 นาที
+                    isRelax = true; // เปลี่ยนไปที่ 5 นาที
+                    updateReadDisplay();
+                    updateRelaxDisplay();
+                }
+            }
+        } , 1000)
+    } else{
+        stopTimer();
+    }
+}
+
+function resetTimer() {
+    stopTimer();
+    ReadTimeRemaining = ReadTime * 60;
+    RelaxTimeRemaining = RelaxTime * 60;
+    isRelax = false;
+    updateDisplay();
+    updateShortDisplay();
+}
+
+const stopTimer = () =>{
+    clearInterval(timer);
+    isRunning = false;
+}
+
+updateRelaxDisplay();
+updateReadDisplay();

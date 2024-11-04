@@ -16,16 +16,6 @@
     animation: spin 3s linear infinite;
 }
 
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 #player {
     display: none;
 }
@@ -62,4 +52,33 @@
 
 .avatar.big img{
     width: 100%;
+}
+
+
+.mode.active {
+    transform: translatey(15px);
+}
+
+.custome-focus{
+    animation: blinking .3s infinite;
+}
+
+/* Animation */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes blinking{
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

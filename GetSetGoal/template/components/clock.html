@@ -1,0 +1,41 @@
+<!-- Clock components -->
+{% macro clock_display() %}
+    <div class="text-center w-1/3 relative mt-6">
+        <!-- <img src="https://placehold.co/400x250" alt=""> -->
+        <img class="opacity-0" src="../static/img/clocl_main_new.png" alt="">
+        <div style="z-index: 20;" class="absolute top-0 left-0 w-full h-full">
+            <div style="z-index: 20;" class=" w-full h-3/5 text-center grid grid-cols-[5%_30%_50%_13%]">
+                <div></div>
+                <div id="modeDisplay" class="mode text-black mt-6 text-xl">Auto</div>
+                <div class="flex flex-col justify-center items-start">
+                    <div id="readTimeDisplay" class="mode flex justify-start items-end gap-1">
+                        <h4 class="text-3xl text-black tracking-wider mr-1">Read </h4>
+                        <h4 onclick="changeTime(this)" id="readMin" class="cursor-pointer text-2xl text-black tracking-wider">25</h4>
+                        <h4 class="text-2xl text-black">:</h4>
+                        <h4 onclick="changeTime(this)" id="readSec" class="cursor-pointer text-2xl text-black tracking-wider">00</h4>
+                    </div>
+                    <div id="relaxTimeDisplay" class="flex justify-start items-end gap-1">
+                        <h4 class="text-3xl text-black tracking-wide mr-1r">Relax </h4>
+                        <h4 onclick="changeTime(this)" id="relaxMin" class="cursor-pointer text-2xl text-black tracking-wider">05</h4>
+                        <h4 class="text-2xl text-black">:</h4>
+                        <h4 onclick="changeTime(this)" id="relaxSec" class="cursor-pointer text-2xl text-black tracking-wider">00</h4>
+                    </div>
+            </div>
+            <div class="flex flex-col justify-center items-center pt-5">
+                <img onclick="addTime()" class="w-[80%] cursor-pointer transition duration-150 ease-in-out hover:scale-125" src="../static/img/clock_up_new.png" alt="">
+                <img  onclick="reduceTime()" class="w-[86%] cursor-pointer transition duration-150 ease-in-out hover:scale-125" src="../static/img/clock_down_new.png" alt="">
+            </div>
+            </div>
+            <div class="flex justify-center items-center mt-6 gap-10">
+                <img onclick="startTimer()" id="toggle" class="w-[10%] cursor-pointer transition duration-150 ease-in-out hover:scale-125" src="../static/img/start.png" alt="">
+                <img class="w-[10%] cursor-pointer transition duration-150 ease-in-out hover:scale-125" src="../static/img/replay.png" alt="">
+            </div>
+        </div>
+        <div style="z-index: 10;" class="btn absolute -top-8 left-14 flex">
+            <img onclick="changeAutomode()" id="autoMode" class="mode active transition duration-150 cursor-pointer w-2/5" src="../static/img/clock_stop_new.png" alt="">
+            <img onclick="changeCustommode()" id="customMode" class="mode transition duration-150 cursor-pointer w-2/5" src="../static/img/clock_stop_new.png" alt="">
+        </div>
+        <img  style="z-index: 11;" class="absolute top-0 left-0" src="../static/img/clocl_main_new.png" alt="">
+        <img style="z-index: 12;" class="absolute bottom-2 h-[30%] left-1/2 -translate-x-1/2"  src="../static/img/clock_start_new.png" alt="">
+    </div>
+{% endmacro %}
