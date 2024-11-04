@@ -156,7 +156,6 @@ function createPlayer(videoId) {
 }
 
 function onPlayerReady(event) {
-    console.log('Player is ready');
     updatePlayPauseButton(false);
 }
 
@@ -252,6 +251,7 @@ const resetClock = async  () =>{
     startTimer()
     tmpW = Math.floor((playerExp / (playerLevel * 300)) * 100)
     document.querySelector("#progressModal").classList.add(`w-[${tmpW}%]`);
+    document.querySelector("#LevelModal").textContent = playerLevel;
     await new Promise(resolve => setTimeout(resolve, 100));
     await levelUp();
     ReadTime = 25
@@ -264,7 +264,7 @@ const resetClock = async  () =>{
 }
 
 const levelUp = async () => {
-    timeCount = 2000;
+    timeCount = 200;
     let tmpSec = 0;
     let countExp = -1;
     let tempExp = timeCount * 2;
@@ -284,28 +284,53 @@ const levelUp = async () => {
                 if (countExp2 > 100) {
                     document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
                     playerLevel++;
+                    document.querySelector("#LevelModal").textContent = playerLevel;
                     clearInterval(tmp2);
                     
                     // Check if we still have enough exp for another level
-                    if (playerExp > playerLevel * 300) {
+                    if (playerExp >= playerLevel * 300) {
                         playerExp = playerExp - (playerLevel * 300);
-                        countExp2 = 0;  // Reset counter
                         startProgressAnimation();  // Start new animation
+                    } else if (playerExp > 0){
+                        document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
+                        remainexp()
                     }
                     return;
                 }
                 
                 // Add new width class and increment
                 document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
-                console.log(countExp2);
+                countExp2++;
+            }, 10);
+        }
+
+        function remainexp(){
+            let target = Math.floor((playerExp / (playerLevel * 300)) * 100)
+            countExp2 = 0
+            tmp2 = setInterval(() => {
+                // Remove previous class
+                document.querySelector("#progressModal").classList.remove(`w-[${countExp2 - 1}%]`);
+                
+                // Check if we've reached 100%
+                if (countExp2 > target) {
+                    document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                    clearInterval(tmp2);
+                    return;
+                }
+                
+                // Add new width class and increment
+                document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
                 countExp2++;
             }, 10);
         }
 
         // Start the initial animation
-        if (playerExp > playerLevel * 300) {
+        if (playerExp >= playerLevel * 300) {
             playerExp = playerExp - (playerLevel * 300);
             startProgressAnimation();
+        } else{
+            document.querySelector("#progressModal").classList.remove(`w-[${tmpW}%]`);
+            remainexp()
         }
       }
  
