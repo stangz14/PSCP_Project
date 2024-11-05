@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block link %}
+    <link rel="stylesheet" href="../../static/css/login.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <img class="logo " src="../../static/img/Logo.png" alt="">
+    <div class="center">
+        <p class="detail">Website for study</p>
+        <a id="btn-login" href="{{ url_for('users.auth') }}" class="btn"><i class='bx bxl-google'></i> Login with Google</a>
+    </div>
+    <div class="dev">
+        <h4>Create By Jaturatab</h4>
+    </div>
+
+    <div class="effect">
+        <img src="../../static/img/fire.gif" alt="" class="fire-1">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire-2">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire-2">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire-2">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire-2">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire-1">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire">
+        <img src="../../static/img/fire.gif" alt="" class="fire-1">
+    </div>
+</div>
+
+<script src="../../static/js/login.js"></script>
+{% endblock %}
