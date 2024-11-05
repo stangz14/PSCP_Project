@@ -12,7 +12,7 @@
     display: none;
 }
 
-.container.night{
+.container{
     background: url('../img/Sky2.png');
     background-size: cover;
 }
@@ -67,6 +67,7 @@
 .custome-focus{
     animation: blinking .3s infinite;
 }
+
 
 /* Animation */
 

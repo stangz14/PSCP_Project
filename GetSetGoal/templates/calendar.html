@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% block link %}
+    <link rel="stylesheet" href="../static/css/calendar.css">
+{% endblock %}
+
+{% block content %}
+<div class="container w-screen h-screen flex justify-center items-center">
+
+    <div class=" calendar-text flex calendar bg-orange-50 rounded-lg shadow-lg p-5 w-auto gap-6 select-none">
+        <div class="cal">
+            <div class="calendar-header flex justify-between items-center mb-8">
+                <div class="flex items-center gap-4">
+                    <span class="month-change cursor-pointer" id="prev-month">
+                        <i class='bx bxs-chevron-left text-2xl'></i>
+                    </span>
+                    <span class="month-picker text-2xl font-bold cursor-pointer text-day" id="month-picker">February</span>
+                    <span class="month-change cursor-pointer" id="next-month">
+                        <i class='bx bxs-chevron-right text-2xl'></i>
+                    </span>
+                </div>
+                <div class="year-picker flex items-center gap-2">
+                    <span class="year-change cursor-pointer" id="prev-year">
+                        <i class='bx bxs-chevron-left'></i>
+                    </span>
+                    <span id="year">2024</span>
+                    <span class="year-change cursor-pointer" id="next-year">
+                        <i class='bx bxs-chevron-right'></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="calendar-body">
+                <div class="calendar-week-days gap-1.5 grid grid-cols-7 text-center mb-4">
+                    <div class="bg-[#FF7F7F] rounded-md text-day">Sun</div>
+                    <div class="bg-[#FFFF99] rounded-md text-day">Mon</div>
+                    <div class="bg-[#FFB3FF] rounded-md text-day">Tue</div>
+                    <div class="bg-[#99FF99] rounded-md text-day">Wed</div>
+                    <div class="bg-[#FFCC99] rounded-md text-day">Thu</div>
+                    <div class="bg-[#99CCFF] rounded-md text-day">Fri</div>
+                    <div class="bg-[#CC99FF] rounded-md text-day">Sat</div>
+                </div>
+                <div class="calendar-days grid grid-cols-7 gap-2"></div>
+                <div class="month-list"></div>
+            </div>
+        </div>
+        
+        <div class="todo bg-orange-50">
+            <h1>Todo</h1>
+            <div id="todo-list" class="list">
+                <div class="text-gray-500 text-center mt-4">Select a date to view events</div>
+            </div>
+        </div>
+        
+        <div class="icon">
+            <i class='bx bx-x text-3xl'></i>
+        </div>
+    </div>
+</div>
+    
+    <script>
+        // Calendar initialization
+        let calendar = document.querySelector('.calendar');
+        let monthList = document.querySelector('.month-list');
+        let monthPicker = document.querySelector('#month-picker');
+        let currDate = new Date();
+        let currMonth = currDate.getMonth();
+    let currYear = currDate.getFullYear();
+    let selectedDate = null;
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    // Event data
+    const events = {
+        "items": [
+            {
+                "id": "event1id",
+                "summary": "Project Kickoff Meeting",
+                "location": "Room A",
+                "description": "Initial project discussion",
+                "start": {
+                    "dateTime": "2023-11-05T09:00:00-07:00",
+                    "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                    "dateTime": "2023-11-05T10:00:00-07:00",
+                    "timeZone": "America/Los_Angeles"
+                },
+                "attendees": [
+                    { "email": "manager@example.com", "responseStatus": "accepted" }
+                ],
+                "status": "confirmed"
+            },
+            {
+                "id": "event2id",
+                "summary": "Weekly Team Sync",
+                "location": "Room B",
+                "start": {
+                    "dateTime": "2024-11-07T10:00:00-07:00",
+                    "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                    "dateTime": "2023-11-07T11:00:00-07:00",
+                    "timeZone": "America/Los_Angeles"
+                },
+                "attendees": [
+                    { "email": "team_member1@example.com", "responseStatus": "accepted" },
+                    { "email": "team_member2@example.com", "responseStatus": "tentative" }
+                ],
+                "status": "confirmed"
+            }
+        ]
+    };
+
+    // Format date from ISO string
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    // Format time from ISO string
+    function formatTime(isoString) {
+        const date = new Date(isoString);
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    }
+
+    // Extract date components from ISO string
+    function getDateComponents(isoString) {
+        const date = new Date(isoString);
+        return {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate()
+        };
+    }
+
+    // Get events for a specific date
+    function getEventsForDate(date) {
+        return events.items.filter(event => {
+            const eventDate = getDateComponents(event.start.dateTime);
+            return eventDate.day === date.getDate() &&
+                   eventDate.month === date.getMonth() &&
+                   eventDate.year === date.getFullYear();
+        });
+    }
+
+    // Update todo list
+    function updateTodoList(date) {
+        const todoList = document.getElementById('todo-list');
+        const dateEvents = getEventsForDate(date);
+
+        if (dateEvents.length === 0) {
+            todoList.innerHTML = '<div class="text-gray-500 text-center mt-4">No events for this date</div>';
+            return;
+        }
+
+        todoList.innerHTML = dateEvents.map(event => `
+            <div class="todo-item">
+                <div class="todo-date">${formatDate(event.start.dateTime)}</div>
+                <div class="todo-time">
+                    ${formatTime(event.start.dateTime)} - ${formatTime(event.end.dateTime)}
+                </div>
+                <div class="todo-summary text-black">${event.summary}</div>
+                ${event.location ? `<div class="todo-location">📍 ${event.location}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    // Previous month navigation
+    document.querySelector('#prev-month').onclick = () => {
+        currMonth--;
+        if (currMonth < 0) {
+            currMonth = 11;
+            currYear--;
+        }
+        generateCalendar(currMonth, currYear);
+    }
+
+    // Next month navigation
+    document.querySelector('#next-month').onclick = () => {
+        currMonth++;
+        if (currMonth > 11) {
+            currMonth = 0;
+            currYear++;
+        }
+        generateCalendar(currMonth, currYear);
+    }
+
+    // Month picker dropdown
+    monthPicker.onclick = () => {
+        monthList.classList.add('show');
+    }
+
+    // Generate month selection list
+    const generateMonthList = () => {
+        monthList.innerHTML = months
+            .map((month, idx) => `<div data-month="${idx}>${month}</div>`)
+            .join('');
+
+        document.querySelectorAll('.month-list > div').forEach(month => {
+            month.onclick = () => {
+                monthList.classList.remove('show');
+                currMonth = parseInt(month.dataset.month);
+                generateCalendar(currMonth, currYear);
+            }
+        });
+    }
+
+    // Year navigation
+    document.querySelector('#prev-year').onclick = () => {
+        --currYear;
+        generateCalendar(currMonth, currYear);
+    }
+
+    document.querySelector('#next-year').onclick = () => {
+        ++currYear;
+        generateCalendar(currMonth, currYear);
+    }
+
+    // Generate calendar grid
+    const generateCalendar = (month, year) => {
+        let calendarDays = document.querySelector('.calendar-days');
+        calendarDays.innerHTML = '';
+        let firstDay = new Date(year, month, 1).getDay();
+        let lastDate = new Date(year, month + 1, 0).getDate();
+
+        monthPicker.innerHTML = months[month];
+        document.querySelector('#year').innerHTML = year;
+
+        let days = "";
+        
+        // Add empty cells for days before the first of the month
+        for(let i = 0; i < firstDay; i++) {
+            days += '<div class="p-2 text-center text-black"></div>';
+        }
+
+        // Generate calendar days
+        for(let i = 1; i <= lastDate; i++) {
+            const currentDate = new Date(year, month, i);
+            let isToday = i === currDate.getDate() && 
+                         month === currDate.getMonth() && 
+                         year === currDate.getFullYear() 
+                         ? 'curr-date' 
+                         : '';
+                         
+            let hasEvents = getEventsForDate(currentDate).length > 0;
+            let eventIndicator = hasEvents ? '<div class="w-1 h-1 bg-purple-500 rounded-full mx-auto mt-1"></div>' : '';
+            
+            days += `
+                <div class="text-black p-2 flex justify-center items-center flex-col text-center rounded-full hover:bg-gray-100 ${isToday}" data-date="${year}-${month + 1}-${i}">
+                    ${i}
+                    ${eventIndicator}
+                </div>
+            `;
+        }
+
+        calendarDays.innerHTML = days;
+
+        // Add click event listeners to calendar days
+        document.querySelectorAll('.calendar-days div[data-date]').forEach(day => {
+            day.addEventListener('click', () => {
+                // Remove previous selection
+                document.querySelectorAll('.calendar-days div').forEach(d => 
+                    d.classList.remove('selected-date'));
+                
+                // Add selection to clicked date
+                day.classList.add('selected-date');
+                
+                // Update todo list
+                const [y, m, d] = day.dataset.date.split('-').map(Number);
+                const selectedDate = new Date(y, m - 1, d);
+                updateTodoList(selectedDate);
+            });
+        });
+    }
+
+    // Initialize calendar
+    generateMonthList();
+    generateCalendar(currMonth, currYear);
+
+    // Close month picker when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!monthPicker.contains(e.target) && !monthList.contains(e.target)) {
+            monthList.classList.remove('show');
+        }
+    });
+</script>
+{% endblock %}

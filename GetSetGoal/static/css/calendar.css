@@ -1,0 +1,103 @@
+.text-day {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #000000;
+    font-family: "Permanent Marker", cursive;
+} 
+
+.calendar-days div {
+    cursor: pointer;
+    position: relative;
+}
+
+.calendar-days div.curr-date {
+    background: #6332c5;
+    color: white;
+}
+
+.calendar-days div:hover {
+    background: #f3f4f6;
+}
+
+.month-list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: white;
+    padding: 20px;
+    grid-template-columns: repeat(3, auto);
+    gap: 5px;
+    display: none;
+}
+
+.month-list.show {
+    display: grid;
+}
+
+.month-list > div {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.month-list > div:hover {
+    background: #f3f4f6;
+}
+
+.todo {
+    min-width: 300px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.todo h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: "Permanent Marker", cursive;
+}
+
+.todo-item {
+    padding: 10px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border-left: 4px solid #6332c5;
+}
+
+.todo-date {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #6332c5;
+}
+
+.todo-time {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.todo-summary {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.todo-location {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.selected-date {
+    background: #e2e8f0 !important;
+}
+
+
+.calendar-text h1,
+.calendar-text span,
+.calendar-text i{
+    color: black;
+}
