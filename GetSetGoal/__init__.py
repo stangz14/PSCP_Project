@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__,)
 app.secret_key = 'SOME_KEY'
 
 # Google OAuth configuration
