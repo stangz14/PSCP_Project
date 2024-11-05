@@ -1,5 +1,5 @@
-let playerExp = 100
-let playerLevel = 1
+let playerExp = userExp
+let playerLevel = userLevel
 const modalAvatar = document.querySelector(".modal-avatar")
 
 const ChooseAvartar = (idx) =>{
