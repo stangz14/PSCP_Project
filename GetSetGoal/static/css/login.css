@@ -1,99 +1,11 @@
-.container{
-    width: 100%;
-    height: 100vh;
-    background: url('../img/Sky2.png');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    padding-top: 50px;
-}
 
-
-.logo{
-    width: 600px;
-    margin-bottom: 10px;
-}
-
-.center{
-    z-index: 99;
-    text-align: center;
-}
-
-.center .detail{
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-}
 
 .container .btn i{
     color: #111187;
 }
 
-.container .btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: .5rem;
-    text-decoration: none;
-    font-size: 2rem;
-    color: #111187;
-    padding: 10px 50px;
-    border-radius: 5px;
-    background-color: #ffff;
-    transition: all .2s ease-in-out;
-}
-
 .container .btn:hover{
     transform: scale(1.05);
-}
-
-.dev {
-    opacity: 1;
-    margin-top: 10%;
-}
-
-.dev h4{
-    font-size: 1rem;
-    font-weight: 400;
-}
-
-.box-cat{
-    position: absolute;
-    bottom: -10%;
-    left: 7%;
-    transform: rotate(10deg);
-}
-
-.box-duck{
-    position: absolute;
-    bottom: -10%;
-    right: 5%;
-    transform: rotate(-7deg);
-}
-
-.box-cat img{
-    width: 300px;
-}
-
-
-.box-duck img{
-    width: 320px;
-}
-
-
-.effect{
-    z-index: 1;
-    display: flex;
-    position: absolute;
-    bottom: -8%;
-    left: -3%;
-    transform: translateY(200%);
-    transition: .2s all ease-in-out;
 }
 
 .effect.active{
@@ -105,19 +17,6 @@
     display: inline;
     margin: 0 -35px;
 }
-
-.effect .fire-1{
-    transform: scale(1.5) translateY(-10%);
-}
-.effect .fire{
-    transform:translateY(1%);
-}
-
-.effect .fire-2{
-    transform:translateY(-7%);
-    margin: 0 -40px;
-}
-
 .dev.active{
     opacity: 0;
 }

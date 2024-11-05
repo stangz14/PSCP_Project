@@ -12,7 +12,7 @@
     display: none;
 }
 
-.container.night{
+.container{
     background: url('../img/Sky2.png');
     background-size: cover;
 }
