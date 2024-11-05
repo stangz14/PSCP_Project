@@ -46,8 +46,9 @@ window.addEventListener("load", (event) => {
     document.querySelector("#LevelBg").textContent = playerLevel
 });
 
+const avatarBox = document.querySelector("#avatar-box")
 const updateAvatar = () => {
-    const avatarBox = document.querySelector("#avatar-box")
+
     if (userAvatar){
         let avatarImg = document.createElement('img')
     
@@ -325,6 +326,18 @@ const levelUp = async () => {
                         document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
                         document.querySelector("#progressBg").classList.remove(`w-[${countExp2}%]`);
                         remainexp()
+                    }
+                    switch (playerLevel){
+                        case 3:
+                            userAvatar = parseInt(userAvatar) + 1
+                            avatarBox.innerHTML = ''
+                            updateAvatar()
+                            break;
+                        case 5:
+                            userAvatar = parseInt(userAvatar) + 1
+                            avatarBox.innerHTML = ''
+                            updateAvatar()
+                            break;  
                     }
                     return;
                 }
