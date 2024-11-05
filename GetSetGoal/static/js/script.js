@@ -1,3 +1,5 @@
+let playerExp = 100
+let playerLevel = 1
 const modalAvatar = document.querySelector(".modal-avatar")
 
 const ChooseAvartar = (idx) =>{
@@ -32,6 +34,8 @@ window.addEventListener("load", (event) => {
     } else{
         updateAvatar()
     }
+    document.querySelector("#progressBg").classList.add(`w-[${Math.floor((playerExp / (playerLevel * 300) * 100))}%]`)
+    document.querySelector("#LevelBg").textContent = playerLevel
 });
 
 const updateAvatar = () => {
@@ -172,7 +176,6 @@ function createPlayer(videoId) {
 }
 
 function onPlayerReady(event) {
-    console.log('Player is ready');
     updatePlayPauseButton(false);
 }
 
@@ -246,6 +249,9 @@ let autoMode = true
 let stopMode = false
 let timeCount = 0
 let focusTime = "#readMin"
+let tmp;
+let tmp2;
+let tmpW;
 
 const toggleButton = document.querySelector('#toggle')
 const RelaxTimeDisplay = document.querySelector("#relaxTimeDisplay")
@@ -253,14 +259,21 @@ const ReadTimeDisplay = document.querySelector("#readTimeDisplay")
 const ModeDisplay = document.querySelector("#modeDisplay")
 const AutoModeBtn = document.querySelector("#autoMode")
 const CustomModeBtn = document.querySelector("#customMode")
+const levelUpTimeDisplay = document.querySelector("#levelupTime")
+const levelupExpDisplay = document.querySelector("#levelupExp")
 
-const resetClock = () =>{
+
+const resetClock = async  () =>{
     stopMode = true
     modal_result.classList.remove("hidden")
     modal_result.classList.add("flex")
     timeCount = timeCount + ((ReadTime * 60) + ReadTimeSec - ReadTimeRemaining)
-    console.log(timeCount)
     startTimer()
+    tmpW = Math.floor((playerExp / (playerLevel * 300)) * 100)
+    document.querySelector("#progressModal").classList.add(`w-[${tmpW}%]`);
+    document.querySelector("#LevelModal").textContent = playerLevel;
+    await new Promise(resolve => setTimeout(resolve, 100));
+    await levelUp();
     ReadTime = 25
     RelaxTime = 5
     ReadTimeRemaining = (ReadTime * 60) + ReadTimeSec;
@@ -270,6 +283,94 @@ const resetClock = () =>{
     updateReadDisplay()
 }
 
+const levelUp = async () => {
+    let tmpSec = 0;
+    let countExp = -1;
+    let tempExp = timeCount * 2;
+   
+    tmp = setInterval(() => {
+      if (countExp >= tempExp) {
+        clearInterval(tmp);
+        playerExp = playerExp + tempExp;
+        let countExp2 = 0;  // Initialize to 0
+        
+        function startProgressAnimation() {
+            tmp2 = setInterval(() => {
+                // Remove previous class
+                document.querySelector("#progressModal").classList.remove(`w-[${countExp2 - 1}%]`);
+                document.querySelector("#progressBg").classList.remove(`w-[${countExp2 - 1}%]`);
+                
+                // Check if we've reached 100%
+                if (countExp2 > 100) {
+                    document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
+                    document.querySelector("#progressBg").classList.remove(`w-[${countExp2}%]`);
+                    playerLevel++;
+                    document.querySelector("#LevelModal").textContent = playerLevel;
+                    document.querySelector("#LevelBg").textContent = playerLevel;
+                    clearInterval(tmp2);
+                    
+                    // Check if we still have enough exp for another level
+                    if (playerExp >= playerLevel * 300) {
+                        playerExp = playerExp - (playerLevel * 300);
+                        startProgressAnimation();  // Start new animation
+                    } else if (playerExp > 0){
+                        document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
+                        document.querySelector("#progressBg").classList.remove(`w-[${countExp2}%]`);
+                        remainexp()
+                    }
+                    return;
+                }
+                
+                // Add new width class and increment
+                document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
+                countExp2++;
+            }, 10);
+        }
+
+        function remainexp(){
+            let target = Math.floor((playerExp / (playerLevel * 300)) * 100)
+            countExp2 = 0
+            tmp2 = setInterval(() => {
+                // Remove previous class
+                document.querySelector("#progressModal").classList.remove(`w-[${countExp2 - 1}%]`);
+                document.querySelector("#progressBg").classList.remove(`w-[${countExp2 - 1}%]`);
+                
+                // Check if we've reached 100%
+                if (countExp2 > target) {
+                    document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                    document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
+                    clearInterval(tmp2);
+                    return;
+                }
+                
+                // Add new width class and increment
+                document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
+                countExp2++;
+            }, 10);
+        }
+
+        // Start the initial animation
+        if (playerExp >= playerLevel * 300) {
+            playerExp = playerExp - (playerLevel * 300);
+            startProgressAnimation();
+        } else{
+            document.querySelector("#progressModal").classList.remove(`w-[${tmpW}%]`);
+            document.querySelector("#progressBg").classList.remove(`w-[${tmpW}%]`);
+            remainexp()
+        }
+      }
+ 
+      if (tmpSec <= timeCount) {
+        const tmpMinutes = Math.floor(tmpSec / 60);
+        const tmpSeconds = tmpSec % 60;
+        levelUpTimeDisplay.textContent = `${String(tmpMinutes).padStart(2, '0')}:${String(tmpSeconds).padStart(2, '0')}`;
+        tmpSec = tmpSec + 2;
+      }
+      levelupExpDisplay.textContent = `${String(countExp++).padStart(2, '0')}`;
+    }, 1);
+};
 
 const changeAutomode = () => { 
     if (!isRunning){

@@ -12,6 +12,11 @@
     display: none;
 }
 
+.container.night{
+    background: url('../img/Sky2.png');
+    background-size: cover;
+}
+
 .spin-animation {
     animation: spin 3s linear infinite;
 }
