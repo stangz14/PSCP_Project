@@ -16,6 +16,8 @@ window.addEventListener("load", (event) => {
         modalAvatar.classList.add("flex")
     modalAvatar.classList.remove("hidden")
     }
+    document.querySelector("#progressBg").classList.add(`w-[${Math.floor((playerExp / (playerLevel * 300) * 100))}%]`)
+    document.querySelector("#LevelBg").textContent = playerLevel
 });
 
 const updateAvtar = () => {
@@ -115,8 +117,6 @@ buttonImage.addEventListener('click', () => {
 function closeModal() {
     modal_music.classList.add('close');
     modal_result.classList.add('hidden');
-    clearInterval(tmp)
-    clearInterval(tmp2)
 }
 
 
@@ -264,7 +264,6 @@ const resetClock = async  () =>{
 }
 
 const levelUp = async () => {
-    timeCount = 200;
     let tmpSec = 0;
     let countExp = -1;
     let tempExp = timeCount * 2;
@@ -279,12 +278,15 @@ const levelUp = async () => {
             tmp2 = setInterval(() => {
                 // Remove previous class
                 document.querySelector("#progressModal").classList.remove(`w-[${countExp2 - 1}%]`);
+                document.querySelector("#progressBg").classList.remove(`w-[${countExp2 - 1}%]`);
                 
                 // Check if we've reached 100%
                 if (countExp2 > 100) {
                     document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
+                    document.querySelector("#progressBg").classList.remove(`w-[${countExp2}%]`);
                     playerLevel++;
                     document.querySelector("#LevelModal").textContent = playerLevel;
+                    document.querySelector("#LevelBg").textContent = playerLevel;
                     clearInterval(tmp2);
                     
                     // Check if we still have enough exp for another level
@@ -293,6 +295,7 @@ const levelUp = async () => {
                         startProgressAnimation();  // Start new animation
                     } else if (playerExp > 0){
                         document.querySelector("#progressModal").classList.remove(`w-[${countExp2}%]`);
+                        document.querySelector("#progressBg").classList.remove(`w-[${countExp2}%]`);
                         remainexp()
                     }
                     return;
@@ -300,6 +303,7 @@ const levelUp = async () => {
                 
                 // Add new width class and increment
                 document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
                 countExp2++;
             }, 10);
         }
@@ -310,16 +314,19 @@ const levelUp = async () => {
             tmp2 = setInterval(() => {
                 // Remove previous class
                 document.querySelector("#progressModal").classList.remove(`w-[${countExp2 - 1}%]`);
+                document.querySelector("#progressBg").classList.remove(`w-[${countExp2 - 1}%]`);
                 
                 // Check if we've reached 100%
                 if (countExp2 > target) {
                     document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                    document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
                     clearInterval(tmp2);
                     return;
                 }
                 
                 // Add new width class and increment
                 document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
+                document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
                 countExp2++;
             }, 10);
         }
@@ -330,6 +337,7 @@ const levelUp = async () => {
             startProgressAnimation();
         } else{
             document.querySelector("#progressModal").classList.remove(`w-[${tmpW}%]`);
+            document.querySelector("#progressBg").classList.remove(`w-[${tmpW}%]`);
             remainexp()
         }
       }
