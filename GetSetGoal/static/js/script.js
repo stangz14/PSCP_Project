@@ -1,68 +1,85 @@
 const modalAvatar = document.querySelector(".modal-avatar")
-const avatarBox = document.querySelector("#avatar-box")
-
-console.log(userData)
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
     modalAvatar.classList.add("hidden")
-    userData['avatar'] = idx
-    console.log(userData)
-    updateAvtar()
+    // Send the updated avatar index to the server
+    fetch('/update_avatar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ avatar: idx })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            userAvatar = data.avatar
+            updateAvatar()
+            console.log('Avatar updated successfully:', data.avatar);
+        } else {
+            console.error('Failed to update avatar:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+
 }
 
 window.addEventListener("load", (event) => {
-    if (!userData['avatar']){
+    if (!userAvatar || userAvatar == 0 ){
         modalAvatar.classList.add("flex")
     modalAvatar.classList.remove("hidden")
+    } else{
+        updateAvatar()
     }
 });
 
-const updateAvtar = () => {
-    if (userData['avatar']){
+const updateAvatar = () => {
+    const avatarBox = document.querySelector("#avatar-box")
+    if (userAvatar){
         let avatarImg = document.createElement('img')
     
-        if (userData['avatar'] == 1){
+        if (userAvatar == 1){
             avatarImg.src = "../static/img/avartars/Cat_01_new.png"
             avatarBox.classList.add('small')
         }
     
-        if (userData['avatar'] == 4){
+        if (userAvatar == 4){
             avatarImg.src = "../static/img/avartars/Duck_01_new.png"
             avatarBox.classList.add('small')
         }
     
-        if (userData['avatar'] == 7){
+        if (userAvatar == 7){
             avatarImg.src = "../static/img/avartars/Nobita_01_new.png"
             avatarBox.classList.add('small')
         }
     
-        if (userData['avatar'] == 2){
+        if (userAvatar == 2){
             avatarImg.src = "../static/img/avartars/Cat_02_new.png"
             avatarBox.classList.add('mid')
         }
     
-        if (userData['avatar'] == 5){
+        if (userAvatar == 5){
             avatarImg.src = "../static/img/avartars/Duck_02_new.png"
             avatarBox.classList.add('mid')
         }
     
-        if (userData['avatar'] == 8){
+        if (userAvatar == 8){
             avatarImg.src = "../static/img/avartars/Nobita_02_new.png"
             avatarBox.classList.add('mid')
         }
     
-        if (userData['avatar'] == 3){
+        if (userAvatar == 3){
             avatarImg.src = "../static/img/avartars/Cat_03_new.png"
             avatarBox.classList.add('big')
         }
     
-        if (userData['avatar'] == 6){
+        if (userAvatar == 6){
             avatarImg.src = "../static/img/avartars/Duck_03_new.png"
             avatarBox.classList.add('big')
         }
     
-        if (userData['avatar'] == 9){
+        if (userAvatar == 9){
             avatarImg.src = "../static/img/avartars/Nobita_03_new.png"
             avatarBox.classList.add('big')
         }
@@ -128,6 +145,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 function onYouTubeIframeAPIReady() {
     createPlayer('dQw4w9WgXcQ');
 }
+
 
 function createPlayer(videoId) {
     if (player) {

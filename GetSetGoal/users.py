@@ -40,7 +40,7 @@ def authorized():
             'google_id': user_data['id'],
             'level' : 1,
             'exp' : 0,
-            'avatar' : None
+            'avatar' : 0
         }).inserted_id
         print(f"User added to MongoDB with id: {user_id}")
     else:
@@ -56,3 +56,22 @@ def get_google_oauth_token():
 def logout():
     session.pop('google_token', None)
     return redirect(url_for('index'))
+
+
+@users.route('/update_avatar', methods=['POST'])
+def update_avatar():
+    if 'google_token' not in session:
+        return {'error': 'User not authenticated'}, 403
+    
+    # Retrieve the avatar index from the request
+    avatar_idx = request.json.get('avatar')
+    user_info = google.get('userinfo')
+    user_data = user_info.data
+    
+    # Update the user's avatar in the database
+    db.users.update_one(
+        {'email': user_data['email']},  # Use the user's email as an identifier
+        {'$set': {'avatar': avatar_idx}}
+    )
+    
+    return {'success': True, 'avatar': avatar_idx}
