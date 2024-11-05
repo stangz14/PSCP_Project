@@ -38,6 +38,7 @@ def create_app():
     def index():
         if 'google_token' in session:
             user_info = google.get('userinfo').data
+            user_info = db.users.find_one({'email': user_info['email']})
             events = google.get('https://www.googleapis.com/calendar/v3/calendars/primary/events').data
             return render_template('index.html', user=user_info, events=events.get('items', []))
         return redirect(url_for('users.login'))

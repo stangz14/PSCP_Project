@@ -1,66 +1,68 @@
 const modalAvatar = document.querySelector(".modal-avatar")
 const avatarBox = document.querySelector("#avatar-box")
-let avartarId = 0
+
+console.log(userData)
 
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
     modalAvatar.classList.add("hidden")
-    avartarId = idx 
+    userData['avatar'] = idx
+    console.log(userData)
     updateAvtar()
 }
 
 window.addEventListener("load", (event) => {
-    if (!avartarId){
+    if (!userData['avatar']){
         modalAvatar.classList.add("flex")
     modalAvatar.classList.remove("hidden")
     }
 });
 
 const updateAvtar = () => {
-    if (avartarId){
+    if (userData['avatar']){
         let avatarImg = document.createElement('img')
     
-        if (avartarId == 1){
+        if (userData['avatar'] == 1){
             avatarImg.src = "../static/img/avartars/Cat_01_new.png"
             avatarBox.classList.add('small')
         }
     
-        if (avartarId == 4){
+        if (userData['avatar'] == 4){
             avatarImg.src = "../static/img/avartars/Duck_01_new.png"
             avatarBox.classList.add('small')
         }
     
-        if (avartarId == 7){
+        if (userData['avatar'] == 7){
             avatarImg.src = "../static/img/avartars/Nobita_01_new.png"
             avatarBox.classList.add('small')
         }
     
-        if (avartarId == 2){
+        if (userData['avatar'] == 2){
             avatarImg.src = "../static/img/avartars/Cat_02_new.png"
             avatarBox.classList.add('mid')
         }
     
-        if (avartarId == 5){
+        if (userData['avatar'] == 5){
             avatarImg.src = "../static/img/avartars/Duck_02_new.png"
             avatarBox.classList.add('mid')
         }
     
-        if (avartarId == 8){
+        if (userData['avatar'] == 8){
             avatarImg.src = "../static/img/avartars/Nobita_02_new.png"
             avatarBox.classList.add('mid')
         }
     
-        if (avartarId == 3){
+        if (userData['avatar'] == 3){
             avatarImg.src = "../static/img/avartars/Cat_03_new.png"
             avatarBox.classList.add('big')
         }
     
-        if (avartarId == 6){
+        if (userData['avatar'] == 6){
             avatarImg.src = "../static/img/avartars/Duck_03_new.png"
             avatarBox.classList.add('big')
         }
     
-        if (avartarId == 9){
+        if (userData['avatar'] == 9){
             avatarImg.src = "../static/img/avartars/Nobita_03_new.png"
             avatarBox.classList.add('big')
         }
