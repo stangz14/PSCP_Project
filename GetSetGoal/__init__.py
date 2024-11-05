@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, session, request
+from flask import Flask, render_template, jsonify, redirect, url_for, session, request
 from flask_oauthlib.client import OAuth
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -29,6 +29,7 @@ google = oauth.remote_app(
 client = MongoClient('mongodb://localhost:27017/')
 db = client['mydb']
 
+
 def create_app():
     from .users import users
 
@@ -39,17 +40,17 @@ def create_app():
         if 'google_token' in session:
             user_info = google.get('userinfo').data
             user_info = db.users.find_one({'email': user_info['email']})
-            events = google.get('https://www.googleapis.com/calendar/v3/calendars/primary/events').data
-            return render_template('index.html', user=user_info, events=events.get('items', []))
-        return render_template('calendar.html')
-        # return redirect(url_for('users.login'))
+            return render_template('index.html', user=user_info)
+        return redirect(url_for('users.login'))
     
     @app.route('/calendar')
     def calendar():
         if 'google_token' in session:
             user_info = google.get('userinfo').data
             user_info = db.users.find_one({'email': user_info['email']})
-            events = google.get('https://www.googleapis.com/calendar/v3/calendars/primary/events').data
-            return render_template('calendar.html', user=user_info, events=events.get('items', []))
+            return render_template('calendar.html', user=user_info)
         return redirect(url_for('users.login'))
+    
+
     return app
+
