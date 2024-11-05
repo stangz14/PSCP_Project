@@ -38,6 +38,8 @@ def authorized():
             'email': user_data['email'],
             'picture': user_data['picture'],
             'google_id': user_data['id'],
+            'level' : 1,
+            'exp' : 0,
             'avatar' : None
         }).inserted_id
         print(f"User added to MongoDB with id: {user_id}")
