@@ -145,6 +145,7 @@ buttonImage.addEventListener('click', () => {
 function closeModal() {
     modal_music.classList.add('close');
     modal_result.classList.add('hidden');
+    timeCount = 0
 }
 
 
