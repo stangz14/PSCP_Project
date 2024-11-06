@@ -60,7 +60,7 @@ const updateAvatar = () => {
         }
     
         if (userAvatar == 4){
-            avatarImg.src = "../static/img/avartars/Duck_01_new.png"
+            avatarImg.src = "../static/img/avartars/duck_01_new.png"
             avatarBox.classList.add('small')
         }
     
@@ -75,7 +75,7 @@ const updateAvatar = () => {
         }
     
         if (userAvatar == 5){
-            avatarImg.src = "../static/img/avartars/Duck_02_new.png"
+            avatarImg.src = "../static/img/avartars/duck_02_new.png"
             avatarBox.classList.add('mid')
         }
     
@@ -90,7 +90,7 @@ const updateAvatar = () => {
         }
     
         if (userAvatar == 6){
-            avatarImg.src = "../static/img/avartars/Duck_03_new.png"
+            avatarImg.src = "../static/img/avartars/duck_03_new.png"
             avatarBox.classList.add('big')
         }
     
