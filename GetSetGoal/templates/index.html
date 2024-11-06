@@ -47,7 +47,7 @@
 
                 <!-- Avatar -->
                  <div id="avatar-box" style="z-index: 2;" class="w-1/3 avatar ">
-                    <!-- <img class="w-3/4 mx-auto" src="../static/img/avartars/Nobita_03_new.png" alt=""> -->
+                    <img id="avatarImg" class="" src="../static/img/avartars/Nobita_03_new.png" alt="">
                  </div>
                  
                 <!-- music player -->
@@ -70,9 +70,9 @@
         
         <!-- <script src=""></script> -->
         <script>
-            let userLevel = "{{ user['level'] | safe }}";
-            let userExp = "{{ user['exp'] | safe }}";
-            let userAvatar = "{{ user['avatar'] | safe }}";
+            let userLevel = parseInt("{{ user['level'] | safe }}");
+            let userExp = parseInt("{{ user['exp'] | safe }}");
+            let userAvatar = parseInt("{{ user['avatar'] | safe }}");
         </script>
         <script src="{{ url_for('static', filename='../static/js/script.js') }}"></script>
     </div>

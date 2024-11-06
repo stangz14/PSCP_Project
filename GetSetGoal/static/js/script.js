@@ -47,10 +47,12 @@ window.addEventListener("load", (event) => {
 });
 
 const avatarBox = document.querySelector("#avatar-box")
+let avatarImg = document.querySelector("#avatarImg")
 const updateAvatar = () => {
 
+    avatarImg.className = "";
+
     if (userAvatar){
-        let avatarImg = document.createElement('img')
     
         if (userAvatar == 1){
             avatarImg.src = "../static/img/avartars/Cat_01_new.png"
@@ -96,8 +98,6 @@ const updateAvatar = () => {
             avatarImg.src = "../static/img/avartars/Nobita_03_new.png"
             avatarBox.classList.add('big')
         }
-    
-        avatarBox.appendChild(avatarImg)
     }
 }
 
@@ -329,13 +329,11 @@ const levelUp = async () => {
                     }
                     switch (playerLevel){
                         case 3:
-                            userAvatar = parseInt(userAvatar) + 1
-                            avatarBox.innerHTML = ''
+                            userAvatar = userAvatar + 1
                             updateAvatar()
                             break;
                         case 5:
-                            userAvatar = parseInt(userAvatar) + 1
-                            avatarBox.innerHTML = ''
+                            userAvatar = userAvatar + 1 
                             updateAvatar()
                             break;  
                     }
