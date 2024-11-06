@@ -11,7 +11,7 @@ users = Blueprint('users', __name__)
 @users.route('/login')
 def login():
     """function display login page"""
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', db = db)
 
 @users.route('/login/auth')
 def auth():
