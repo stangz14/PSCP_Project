@@ -10,14 +10,17 @@ users = Blueprint('users', __name__)
 
 @users.route('/login')
 def login():
+    """function display login page"""
     return render_template('auth/login.html')
 
 @users.route('/login/auth')
 def auth():
+    """function for authorized"""
     return google.authorize(callback=url_for('users.authorized', _external=True))
 
 @users.route(os.getenv('REDIRECT_URI'))
 def authorized():
+    """function authorized"""
     response = google.authorized_response()
     if response is None or response.get('access_token') is None:
         return 'Access denied: reason={} error={}'.format(
@@ -50,16 +53,19 @@ def authorized():
 
 @google.tokengetter
 def get_google_oauth_token():
+    """function get Token"""
     return session.get('google_token')
 
 @users.route('/logout')
 def logout():
+    """function logout from Website"""
     session.pop('google_token', None)
     return redirect(url_for('index'))
 
 
 @users.route('/update_avatar', methods=['POST'])
 def update_avatar():
+    """function for update avatar to database"""
     if 'google_token' not in session:
         return {'error': 'User not authenticated'}, 403
     
@@ -79,6 +85,7 @@ def update_avatar():
 
 @users.route('/getcalendar', methods=['GET'])
 def get_calendar():
+    """function get calendar from google"""
     if 'google_token' not in session:
         return {'error': 'User not authenticated'}, 403
     events = google.get('https://www.googleapis.com/calendar/v3/calendars/primary/events').data
@@ -87,6 +94,7 @@ def get_calendar():
 
 @users.route('/update_player_level', methods=['POST'])
 def update_level():
+    """funciton for update userlevel"""
     if 'google_token' not in session:
         return {'error': 'User not authenticated'}, 403
     

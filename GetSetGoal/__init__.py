@@ -16,7 +16,7 @@ google = oauth.remote_app(
     consumer_key=os.getenv('GOOGLE_CLIENT_ID'),
     consumer_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
     request_token_params={
-        'scope': 'email profile https://www.googleapis.com/auth/calendar.readonly',
+        'scope': os.getenv('SCOPES'),
     },
     base_url='https://www.googleapis.com/oauth2/v1/',
     request_token_url=None,
@@ -26,7 +26,7 @@ google = oauth.remote_app(
 )
 
 # MongoDB configuration
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient(os.getenv('MONGODB'))
 db = client['mydb']
 
 
@@ -37,6 +37,7 @@ def create_app():
     
     @app.route('/')
     def index():
+        """main function for display homepage"""
         if 'google_token' in session:
             user_info = google.get('userinfo').data
             user_info = db.users.find_one({'email': user_info['email']})
@@ -45,6 +46,7 @@ def create_app():
     
     @app.route('/calendar')
     def calendar():
+        """main function for display calendarpage"""
         if 'google_token' in session:
             user_info = google.get('userinfo').data
             user_info = db.users.find_one({'email': user_info['email']})
