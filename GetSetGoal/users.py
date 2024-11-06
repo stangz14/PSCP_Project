@@ -11,7 +11,7 @@ users = Blueprint('users', __name__)
 @users.route('/login')
 def login():
     """function display login page"""
-    return render_template('auth/login.html', db = db)
+    return render_template('auth/login.html')
 
 @users.route('/login/auth')
 def auth():
@@ -39,7 +39,6 @@ def authorized():
         user_id = db.users.insert_one({
             'name': user_data['name'],
             'email': user_data['email'],
-            'picture': user_data['picture'],
             'google_id': user_data['id'],
             'level' : 1,
             'exp' : 0,
