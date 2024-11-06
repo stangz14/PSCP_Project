@@ -3,6 +3,7 @@
 {% import "components/calendar.html" as calendar %}
 {% import "components/setting.html" as setting %}
 {% import "components/avatar.html" as avatar %}
+{% import "components/loading.html" as loading %}
 
 {% extends 'base.html' %}
 
@@ -63,6 +64,9 @@
 
          <!-- modal for result exp -->
         {{ avatar.reuslt_modal()}}
+
+        <!--  modal for loading -->
+        {{ loading.loading_display()}}
         
         <!-- <script src=""></script> -->
         <script>

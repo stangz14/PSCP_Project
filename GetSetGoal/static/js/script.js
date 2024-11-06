@@ -2,6 +2,14 @@ let playerExp = userExp
 let playerLevel = userLevel
 const modalAvatar = document.querySelector(".modal-avatar")
 
+const loadding_modal = document.querySelector(".loading_display")
+loadding_modal.classList.remove('hidden')
+loadding_modal.classList.add('flex')
+setTimeout(() =>{
+    loadding_modal.classList.add('hidden')
+    loadding_modal.classList.remove('flex')
+},1500)
+
 const ChooseAvartar = (idx) =>{
     modalAvatar.classList.remove("flex")
     modalAvatar.classList.add("hidden")

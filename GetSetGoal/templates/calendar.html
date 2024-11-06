@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block link %}
+    <link rel="stylesheet" href="../static/css/calendar.css">
+{% endblock %}
+
+{% block content %}
+<div class="container w-screen h-screen flex justify-center items-center ">
+
+    <div class=" calendar-text flex calendar bg-orange-50 rounded-lg shadow-lg p-5 w-auto gap-6 select-none ">
+        <div class="cal">
+            <div class="calendar-header flex justify-between items-center mb-8">
+                <div class="flex items-center gap-4">
+                    <span class="month-change cursor-pointer" id="prev-month">
+                        <i class='bx bxs-chevron-left text-2xl'></i>
+                    </span>
+                    <span class="month-picker text-2xl font-bold cursor-pointer text-day" id="month-picker">February</span>
+                    <span class="month-change cursor-pointer" id="next-month">
+                        <i class='bx bxs-chevron-right text-2xl'></i>
+                    </span>
+                </div>
+                <div class="year-picker flex items-center gap-2">
+                    <span class="year-change cursor-pointer" id="prev-year">
+                        <i class='bx bxs-chevron-left'></i>
+                    </span>
+                    <span id="year">2024</span>
+                    <span class="year-change cursor-pointer" id="next-year">
+                        <i class='bx bxs-chevron-right'></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="calendar-body">
+                <div class="calendar-week-days gap-1.5 grid grid-cols-7 text-center mb-4">
+                    <div class="bg-[#FF7F7F] rounded-md text-day">Sun</div>
+                    <div class="bg-[#FFFF99] rounded-md text-day">Mon</div>
+                    <div class="bg-[#FFB3FF] rounded-md text-day">Tue</div>
+                    <div class="bg-[#99FF99] rounded-md text-day">Wed</div>
+                    <div class="bg-[#FFCC99] rounded-md text-day">Thu</div>
+                    <div class="bg-[#99CCFF] rounded-md text-day">Fri</div>
+                    <div class="bg-[#CC99FF] rounded-md text-day">Sat</div>
+                </div>
+                <span id="loading" class="text-black text-center text-xl">Loading...</span >
+                <div class="calendar-days grid grid-cols-7 gap-2">
+                </div>
+                <div class="month-list"></div>
+            </div>
+        </div>
+        
+        <div class="todo bg-orange-50">
+            <h1>Todo</h1>
+            <div id="todo-list" class="list">
+                <div class="text-gray-500 text-center mt-4">Select a date to view events</div>
+            </div>
+        </div>
+        
+        <a class="icon cursor-pointer" href="{{ url_for('index' ) }}">
+            <i class='bx bx-x text-3xl'></i>
+        </a>
+    </div>
+</div>
+    <script>
+
+    </script>
+    <script src="{{ url_for('static', filename='../static/js/calendar.js') }}"></script>
+    <!-- <script src="../static/js/calendar.js"></script> -->
+{% endblock %}

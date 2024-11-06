@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Blueprint, url_for, request, session, redirect
+from flask import Flask, render_template, Blueprint, url_for, request, session, redirect, jsonify
 from dotenv import load_dotenv
 import os
 from . import google
@@ -75,3 +75,9 @@ def update_avatar():
     )
     
     return {'success': True, 'avatar': avatar_idx}
+
+
+@users.route('/getcalendar', methods=['GET'])
+def get_calendar():
+    events = google.get('https://www.googleapis.com/calendar/v3/calendars/primary/events').data
+    return jsonify(events.get('items', []))
