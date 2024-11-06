@@ -145,6 +145,7 @@ buttonImage.addEventListener('click', () => {
 function closeModal() {
     modal_music.classList.add('close');
     modal_result.classList.add('hidden');
+    timeCount = 0
 }
 
 
@@ -333,6 +334,9 @@ const levelUp = async () => {
                             updateAvatar()
                             break;
                         case 5:
+                            if (userAvatar == 1 || userAvatar == 4 || userAvatar == 7){
+                                userAvatar = userAvatar + 1 
+                            }
                             userAvatar = userAvatar + 1 
                             updateAvatar()
                             break;  
