@@ -279,6 +279,8 @@ const resetClock = async  () =>{
     timeCount = timeCount + ((ReadTime * 60) + ReadTimeSec - ReadTimeRemaining)
     startTimer()
     tmpW = Math.floor((playerExp / (playerLevel * 300)) * 100)
+    levelUpTimeDisplay.textContent = `00:00`;
+    levelupExpDisplay.textContent = `00`;
     document.querySelector("#progressModal").classList.add(`w-[${tmpW}%]`);
     document.querySelector("#LevelModal").textContent = playerLevel;
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -290,6 +292,26 @@ const resetClock = async  () =>{
     stopMode = false
     updateRelaxDisplay()
     updateReadDisplay()
+}
+
+const UpdatePlayerLevel = () => {
+    fetch('/update_player_level', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ exp: playerExp , level: playerLevel })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            timeCount = 0
+            console.log('Level updated successfully:', data.exp , data.level );
+        } else {
+            console.error('Failed to update avatar:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 const levelUp = async () => {
@@ -327,16 +349,18 @@ const levelUp = async () => {
                         document.querySelector("#progressBg").classList.remove(`w-[${countExp2}%]`);
                         remainexp()
                     }
-                    switch (playerLevel){
-                        case 3:
-                            userAvatar = userAvatar + 1
-                            updateAvatar()
-                            break;
-                        case 5:
+                    if (playerLevel >=5 ){
+                        if (userAvatar == 1 || userAvatar == 4 || userAvatar == 7){
                             userAvatar = userAvatar + 1 
-                            updateAvatar()
-                            break;  
+                        }
+                        userAvatar = userAvatar + 1 
+                        updateAvatar()
+                    } else if (playerLevel >= 3){
+                        userAvatar = userAvatar + 1
+                        updateAvatar()
                     }
+
+                    UpdatePlayerLevel()
                     return;
                 }
                 
@@ -360,6 +384,7 @@ const levelUp = async () => {
                     document.querySelector("#progressModal").classList.add(`w-[${countExp2}%]`);
                     document.querySelector("#progressBg").classList.add(`w-[${countExp2}%]`);
                     clearInterval(tmp2);
+                    UpdatePlayerLevel()
                     return;
                 }
                 

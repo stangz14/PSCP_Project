@@ -85,17 +85,21 @@ def get_calendar():
     return jsonify(events.get('items', []))
 
 
-@users.route('/evolution', methods=['GET','POST'])
-def evolution():
+@users.route('/update_player_level', methods=['POST'])
+def update_level():
     if 'google_token' not in session:
         return {'error': 'User not authenticated'}, 403
     
-    avatar_idx = request.json.get('avatar') + 1
+    # Retrieve the playerLevel and Exp from the request
+    level = request.json.get('level')
+    exp = request.json.get('exp')
     user_info = google.get('userinfo')
     user_data = user_info.data
     
     # Update the user's avatar in the database
     db.users.update_one(
         {'email': user_data['email']},  # Use the user's email as an identifier
-        {'$set': {'avatar': avatar_idx}}
+        {'$set': {'level': level, 'exp' : exp}}
     )
+    
+    return {'success': True, 'level': level, 'exp': exp}
