@@ -154,7 +154,6 @@ tag.src = "https://www.youtube.com/iframe_api";
 const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// 2. Create the player when API is ready
 function onYouTubeIframeAPIReady() {
     createPlayer('QZTDZFtbrec');
 }
