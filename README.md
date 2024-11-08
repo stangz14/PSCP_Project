@@ -4,7 +4,11 @@ Don't reduce the size of your "DREAMS" just because of the word "LAZY".
 
 ### Projects Report
 
-&emsp; Please sign-in with KMITL's Office 365 account to view our report : https://shorturl.asia/R9E8Y
+&emsp; Please sign-in with KMITL's Office 365 account to view our report : https://shorturl.asia/lJbdK
+
+### Projects Link
+
+&emsp; Link : pscp-project-blue.vercel.app
 
 ### Fetures
 
