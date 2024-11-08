@@ -8,7 +8,7 @@ Don't reduce the size of your "DREAMS" just because of the word "LAZY".
 
 ### Projects Link
 
-&emsp; Link : pscp-project-blue.vercel.app
+&emsp; Link : [pscp-project-blue.vercel.app](https://pscp-project-blue.vercel.app)
 
 ### Fetures
 
